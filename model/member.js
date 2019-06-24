@@ -59,3 +59,29 @@ exports.getMembersBySurname = function(surname, callback){
         }
     })
 }
+
+
+exports.updateMember = function(id, data, callback){
+    let sql = "UPDATE members SET name='" + data.name + "', surname='" + data.surname + "', idnumber='" + data.idnumber + "', email='" + data.email + "', contactnumber='" + data.contactnumber + "', gender='" + data.gender + "', housenumber='" + data.housenumber + "', streetname='" + data.streetname + "', suburb='" + data.suburb + "', province='" + data.province + "', birthyear='" + data.birthyear + "' WHERE membershipnumber='" + id + "'";
+   
+   
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+exports.deleteMember = function(id, callback){
+    let sql = "DELETE from members where idMembers = ?";
+    db.query(sql, [id],function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+

@@ -69,3 +69,43 @@ app.get("/api/memberbysurname/:id", function(req, res){
         res.status(500).send(error);
     }
 });
+
+//update member
+
+app.put("/api/member/:id", function(req, res){
+    try {
+        member.updateMember(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                member.getMemberById(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+
+//delete member
+
+app.delete("/api/member/:id", function(req, res){
+    try {
+        member.deleteMember(req.params.id, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})

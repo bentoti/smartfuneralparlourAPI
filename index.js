@@ -3,6 +3,8 @@ const mysql = require("mysql");
 const bodyparser = require("body-parser");
 
 const member = require("./model/member");
+const user = require("./model/user");
+
 
 const app = express();
 app.listen(3000);
@@ -109,3 +111,65 @@ app.delete("/api/member/:id", function(req, res){
         res.status(500).send(error);
     }
 })
+
+
+
+/// Get user by ID
+app.get("/api/user/:id", function(req, res){
+    try {
+        user.getUserById(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+///Update User
+
+//update member
+
+app.put("/api/user/:id", function(req, res){
+    try {
+        user.updateUser(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                user.getUserById(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+
+
+
+
+/// Delete user
+app.delete("/api/user/:id", function(req, res){
+    try {
+        user.deleteUser(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});

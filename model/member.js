@@ -27,6 +27,42 @@ exports.getmember = function(id, callback){
     })
 }
 
+exports.getmemberbysurname= function(id, callback){
+    let sql = "SELECT * FROM member WHERE surname LIKE '%" + id + "%'";
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+
+exports.getmemberbymembershipnumber = function(id, callback){
+    let sql = "SELECT * FROM member WHERE membershipnumber LIKE '%" + id + "%'";
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+exports.getmemberbyidentitynumber = function(id, callback){
+    let sql = "SELECT * FROM member WHERE identitynumber LIKE '%" + id + "%'";
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+
+
 
 
 exports.insertmember = function(data, callback){

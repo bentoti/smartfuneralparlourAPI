@@ -690,6 +690,52 @@ app.get("/api/member/:id", function(req, res){
     }
 });
 
+app.get("/api/getmemberbysurname/:id", function(req, res){
+    try {
+        member.getmemberbysurname(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+app.get("/api/getmemberbymembershipnumber/:id", function(req, res){
+    try {
+        member.getmemberbymembershipnumber(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+app.get("/api/getmemberbyidentitynumber/:id", function(req, res){
+    try {
+        member.getmemberbyidentitynumber(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
 app.post("/api/member", function(req, res){
     try {
         member.insertmember(req.body, function(err, data){

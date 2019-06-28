@@ -27,7 +27,17 @@ exports.getclaimtype = function(id, callback){
     })
 }
 
+exports.getallclaimtype = function(id, callback){
+    let sql = `SELECT * From claimtype`;
 
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
 
 exports.insertclaimtype = function(data, callback){
     

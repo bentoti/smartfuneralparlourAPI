@@ -16,6 +16,18 @@ db.connect(function(err){
 });
 
 
+
+exports.getalllifestatus = function(id, callback){
+    let sql = `SELECT * From lifestatus`;
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
 exports.getlifestatus = function(id, callback){
     let sql = `SELECT * From lifestatus WHERE idlifestatus = ?`;
     db.query(sql, [id], function(err, data){

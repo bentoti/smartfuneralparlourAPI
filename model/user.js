@@ -16,6 +16,20 @@ db.connect(function(err){
 });
 
 
+exports.getalluser = function(id, callback){
+    let sql = `SELECT * From user`;
+
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+
+
 exports.getuser = function(id, callback){
     let sql = `SELECT * From user WHERE iduser = ?`;
     db.query(sql, [id], function(err, data){

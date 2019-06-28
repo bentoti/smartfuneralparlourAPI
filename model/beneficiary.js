@@ -28,6 +28,17 @@ exports.getbeneficiary = function(id, callback){
 }
 
 
+exports.getbeneficiarybyidmember = function(id, callback){
+    let sql = `SELECT * From beneficiary WHERE idmember = ?`;
+    db.query(sql, [id], function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
 
 exports.insertbeneficiary = function(data, callback){
     

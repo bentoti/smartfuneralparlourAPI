@@ -16,6 +16,18 @@ db.connect(function(err){
 });
 
 
+exports.getallpolicytype = function(id, callback){
+    let sql = `SELECT * From policytype`;
+
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
 exports.getpolicytype = function(id, callback){
     let sql = `SELECT * From policytype WHERE idpolicytype = ?`;
     db.query(sql, [id], function(err, data){

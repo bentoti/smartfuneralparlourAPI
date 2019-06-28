@@ -16,6 +16,20 @@ db.connect(function(err){
 });
 
 
+
+exports.getallpolicystatus = function(id, callback){
+    let sql = `SELECT * From policystatus`;
+
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+
 exports.getpolicystatus = function(id, callback){
     let sql = `SELECT * From policystatus WHERE idpolicystatus = ?`;
     db.query(sql, [id], function(err, data){

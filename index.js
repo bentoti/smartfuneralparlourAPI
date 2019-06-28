@@ -26,10 +26,28 @@ app.listen(3000);
 
 // parse application/json
 app.use(bodyParser.json());
-app.use(Cors());+
+app.use(Cors());
 
 
 //user
+
+
+app.get("/api/user/", function(req, res){
+    try {
+        
+        var id;
+        user.getalluser(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 app.get("/api/user/:id", function(req, res){
     try {
         user.getuser(req.params.id,function(err, data){
@@ -245,7 +263,25 @@ app.delete("/api/bankingdetails/:id", function(req, res){
     }
 })
 
-//beneficiary
+//beneficiary   
+
+
+
+app.get("/api/beneficiarybyidmember/:id", function(req, res){
+    try {
+        beneficiary.getbeneficiarybyidmember(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 app.get("/api/beneficiary/:id", function(req, res){
     try {
         beneficiary.getbeneficiary(req.params.id,function(err, data){
@@ -388,6 +424,24 @@ app.delete("/api/claim/:id", function(req, res){
 })
 
 //claimtype
+
+app.get("/api/claimtype/", function(req, res){
+    try {
+        
+        var id;
+        claimtype.getallclaimtype(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 app.get("/api/claimtype/:id", function(req, res){
     try {
         claimtype.getclaimtype(req.params.id,function(err, data){
@@ -604,6 +658,22 @@ app.delete("/api/informant/:id", function(req, res){
 
 
 //lifestatus
+
+app.get("/api/lifestatus/", function(req, res){
+    try {
+        lifestatus.getalllifestatus(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 app.get("/api/lifestatus/:id", function(req, res){
     try {
         lifestatus.getlifestatus(req.params.id,function(err, data){
@@ -868,6 +938,24 @@ app.delete("/api/payment/:id", function(req, res){
 
 
 //payouttype
+
+app.get("/api/payouttype/", function(req, res){
+    try {
+        
+        var id;
+        payouttype.getallpayouttype(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 app.get("/api/payouttype/:id", function(req, res){
     try {
         payouttype.getpayouttype(req.params.id,function(err, data){
@@ -941,6 +1029,26 @@ app.delete("/api/payouttype/:id", function(req, res){
 
 
 //role
+
+app.get("/api/role/", function(req, res){
+    try {
+        
+        var id;
+        user.getallrole(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
+
 app.get("/api/role/:id", function(req, res){
     try {
         role.getrole(req.params.id,function(err, data){
@@ -1086,9 +1194,26 @@ app.delete("/api/policydetails/:id", function(req, res){
 
 
 //policystatus
-app.get("/api/policystatus/:id", function(req, res){
+
+app.get("/api/user/", function(req, res){
     try {
-        policystatus.getpolicystatus(req.params.id,function(err, data){
+        
+        var id;
+        user.getalluser(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.get("/api/policystatus/", function(req, res){
+    try {
+        policystatus.getallpolicystatus(req.params.id,function(err, data){
             if(err){
                 throw err
             }else{
@@ -1157,6 +1282,25 @@ app.delete("/api/policystatus/:id", function(req, res){
 })
 
 //policytype
+app.get("/api/policytype/", function(req, res){
+    try {
+        
+        var id;
+        policytype.getallpolicytype(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
+
 app.get("/api/policytype/:id", function(req, res){
     try {
         policytype.getpolicytype(req.params.id,function(err, data){

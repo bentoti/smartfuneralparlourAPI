@@ -16,8 +16,22 @@ db.connect(function(err){
 });
 
 
-exports.getpayout = function(id, callback){
-    let sql = `SELECT * From payout WHERE idpayout = ?`;
+exports.getallpayouttype = function(id, callback){
+    let sql = `SELECT * From payouttype`;
+
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+
+
+exports.getpayouttype = function(id, callback){
+    let sql = `SELECT * From payouttype WHERE idpayouttype = ?`;
     db.query(sql, [id], function(err, data){
         if(err){
             callback(err);
@@ -29,9 +43,9 @@ exports.getpayout = function(id, callback){
 
 
 
-exports.insertpayout = function(data, callback){
+exports.insertpayouttype = function(data, callback){
     
-  let sql = "INSERT INTO payout SET ?";
+  let sql = "INSERT INTO payouttype SET ?";
 
     db.query(sql,[data], function(err, result){
         if(err){
@@ -44,8 +58,8 @@ exports.insertpayout = function(data, callback){
 
 
 
-exports.updatepayout = function(id, data, callback){
-    let sql = "update payout set ? where idpayout = ?";
+exports.updatepayouttype = function(id, data, callback){
+    let sql = "update payouttype set ? where idpayouttype = ?";
     db.query(sql, [data, id], function(err, data){
         if(err){
             callback(err);
@@ -56,8 +70,8 @@ exports.updatepayout = function(id, data, callback){
 }
 
 
-exports.deletepayout = function(id, callback){
-    let sql = "DELETE from payout where idpayout = ?";
+exports.deletepayouttype = function(id, callback){
+    let sql = "DELETE from payouttype where idpayouttype = ?";
     db.query(sql, [id],function(err, data){
         if(err){
             callback(err);

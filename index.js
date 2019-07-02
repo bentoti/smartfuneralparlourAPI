@@ -8,6 +8,7 @@ const bankingdetails = require("./model/bankingdetails");
 const beneficiary = require("./model/beneficiary");
 
 const claim = require("./model/claim");
+const claimstatus = require("./model/claimstatus");
 const claimtype = require("./model/claimtype");
 const funeralarrangement = require("./model/funeralarrangement");
 const informant = require("./model/informant");
@@ -75,6 +76,21 @@ app.post("/api/user", function(req, res){
                         res.send(data);
                     }
                 })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+});
+
+app.post("/api/login", function(req, res){
+    try {
+        user.login(req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
             }
         })
     } catch (error) {
@@ -511,6 +527,97 @@ app.delete("/api/claimtype/:id", function(req, res){
         res.status(500).send(error);
     }
 })
+
+
+//claimstatus
+app.get("/api/claimstatus/", function(req, res){
+    try {
+        
+        var id;
+        claimstatus.getallclaimstatus(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+app.get("/api/claimstatus/:id", function(req, res){
+    try {
+        claimstatus.getclaimstatus(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.post("/api/claimstatus", function(req, res){
+    try {
+        claimstatus.insertclaimstatus(req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                claimstatus.getclaimstatus(data.insertId, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+});
+
+app.put("/api/claimstatus/:id", function(req, res){
+    try {
+        claimstatus.updateclaimstatus(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                claimstatus.getclaimstatus(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+app.delete("/api/claimstatus/:id", function(req, res){
+    try {
+        claimstatus.deleteclaimstatus(req.params.id, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
 
 
 //funeralarrangement
@@ -1297,8 +1404,6 @@ app.get("/api/policytype/", function(req, res){
         res.status(500).send(error);
     }
 });
-
-
 
 
 app.get("/api/policytype/:id", function(req, res){

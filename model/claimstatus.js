@@ -16,8 +16,8 @@ db.connect(function(err){
 });
 
 
-exports.getalluser = function(id, callback){
-    let sql = `SELECT * From user`;
+exports.getallclaimstatus = function(id, callback){
+    let sql = `SELECT * From claimstatus`;
 
     db.query(sql, function(err, data){
         if(err){
@@ -28,10 +28,8 @@ exports.getalluser = function(id, callback){
     })
 }
 
-
-
-exports.getuser = function(id, callback){
-    let sql = `SELECT * From user WHERE iduser = ?`;
+exports.getclaimstatus = function(id, callback){
+    let sql = `SELECT * From claimstatus WHERE idclaimstatus = ?`;
     db.query(sql, [id], function(err, data){
         if(err){
             callback(err);
@@ -43,9 +41,9 @@ exports.getuser = function(id, callback){
 
 
 
-exports.insertuser = function(data, callback){
+exports.insertclaimstatus = function(data, callback){
     
-  let sql = "INSERT INTO user SET ?";
+  let sql = "INSERT INTO claimstatus SET ?";
 
     db.query(sql,[data], function(err, result){
         if(err){
@@ -57,23 +55,9 @@ exports.insertuser = function(data, callback){
 }
 
 
-exports.login = function(data, callback){
-    
-  
-    
-    let sql = 'SELECT * FROM user WHERE name = "'+data.username+'" AND password = "'+data.password+'"';
-  
-      db.query(sql,[data], function(err, result){
-          if(err){
-              callback(err);
-          }else{
-              callback(null, result);
-          }
-      })
-  }
 
-exports.updateuser = function(id, data, callback){
-    let sql = "update user set ? where iduser = ?";
+exports.updateclaimstatus = function(id, data, callback){
+    let sql = "update claimstatus set ? where idclaimstatus = ?";
     db.query(sql, [data, id], function(err, data){
         if(err){
             callback(err);
@@ -84,8 +68,8 @@ exports.updateuser = function(id, data, callback){
 }
 
 
-exports.deleteuser = function(id, callback){
-    let sql = "DELETE from user where iduser = ?";
+exports.deleteclaimstatus = function(id, callback){
+    let sql = "DELETE from claimstatus where idclaimstatus = ?";
     db.query(sql, [id],function(err, data){
         if(err){
             callback(err);

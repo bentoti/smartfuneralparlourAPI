@@ -27,6 +27,17 @@ exports.getclaim = function(id, callback){
     })
 }
 
+exports.getclaimbyidmember = function(id, callback){
+    let sql = `SELECT * From claim WHERE idmember = ?`;
+    db.query(sql, [id], function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
 
 
 exports.insertclaim = function(data, callback){

@@ -385,6 +385,22 @@ app.get("/api/claim/:id", function(req, res){
     }
 });
 
+
+app.get("/api/getclaimbyidmember/:id", function(req, res){
+    try {
+        claim.getclaimbyidmember(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 app.post("/api/claim", function(req, res){
     try {
         claim.insertclaim(req.body, function(err, data){

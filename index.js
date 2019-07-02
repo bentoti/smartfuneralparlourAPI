@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Cors = require("cors");
-
+const action = require("./model/action");
+const claimaudit = require("./model/claimaudit");
+const memberaudit = require("./model/memberaudit");
 const user = require("./model/user");
 const balance = require("./model/balance");
 const bankingdetails = require("./model/bankingdetails");
@@ -458,9 +460,11 @@ app.get("/api/claimtype/", function(req, res){
 });
 
 
-app.get("/api/claimtype/:id", function(req, res){
+app.get("/api/claimtype/", function(req, res){
     try {
-        claimtype.getclaimtype(req.params.id,function(err, data){
+        
+        var id;
+        claimtype.getallclaimtype(id,function(err, data){
             if(err){
                 throw err
             }else{
@@ -471,6 +475,9 @@ app.get("/api/claimtype/:id", function(req, res){
         res.status(500).send(error);
     }
 });
+
+
+
 
 app.post("/api/claimtype", function(req, res){
     try {
@@ -530,6 +537,59 @@ app.delete("/api/claimtype/:id", function(req, res){
 
 
 //claimstatus
+
+app.get("/api/getclaimsdeclined/", function(req, res){
+    try {
+        
+        var id;
+        claimstatus.getclaimsdeclined(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+app.get("/api/getclaimsapproved/", function(req, res){
+    try {
+        
+        var id;
+        claimstatus.getclaimsapproved(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
+
+app.get("/api/getclaimsdraft/", function(req, res){
+    try {
+        claimstatus.getclaimsdraft(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
 app.get("/api/claimstatus/", function(req, res){
     try {
         
@@ -985,6 +1045,21 @@ app.get("/api/payment/:id", function(req, res){
         res.status(500).send(error);
     }
 });
+
+app.get("/api/paymentbymembershipnumber/:id", function(req, res){
+    try {
+        payment.getpaymentbymembershipnumber(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 
 app.post("/api/payment", function(req, res){
     try {
@@ -1465,6 +1540,240 @@ app.put("/api/policytype/:id", function(req, res){
 app.delete("/api/policytype/:id", function(req, res){
     try {
         policytype.deletepolicytype(req.params.id, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
+
+//memberaudit
+app.get("/api/memberaudit/:id", function(req, res){
+    try {
+        memberaudit.getmemberaudit(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.post("/api/memberaudit", function(req, res){
+    try {
+        memberaudit.insertmemberaudit(req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                memberaudit.getmemberaudit(data.insertId, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+});
+
+app.put("/api/memberaudit/:id", function(req, res){
+    try {
+        memberaudit.updatememberaudit(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                memberaudit.getmemberaudit(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+app.delete("/api/memberaudit/:id", function(req, res){
+    try {
+        memberaudit.deletememberaudit(req.params.id, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
+//claimaudit
+app.get("/api/claimaudit/:id", function(req, res){
+    try {
+        claimaudit.getclaimaudit(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.post("/api/claimaudit", function(req, res){
+    try {
+        claimaudit.insertclaimaudit(req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                claimaudit.getclaimaudit(data.insertId, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+});
+
+app.put("/api/claimaudit/:id", function(req, res){
+    try {
+        claimaudit.updateclaimaudit(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                claimaudit.getclaimaudit(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+app.delete("/api/claimaudit/:id", function(req, res){
+    try {
+        claimaudit.deleteclaimaudit(req.params.id, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+//action
+
+app.get("/api/action/", function(req, res){
+    try {
+        
+        var id;
+        action.getallaction(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+app.get("/api/action/:id", function(req, res){
+    try {
+        action.getaction(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.post("/api/action", function(req, res){
+    try {
+        action.insertaction(req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                action.getaction(data.insertId, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+});
+
+app.put("/api/action/:id", function(req, res){
+    try {
+        action.updateaction(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                action.getaction(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+app.delete("/api/action/:id", function(req, res){
+    try {
+        action.deleteaction(req.params.id, function(err, data){
             if(err){
                 throw err;
             }else{

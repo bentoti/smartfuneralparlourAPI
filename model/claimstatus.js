@@ -28,6 +28,43 @@ exports.getallclaimstatus = function(id, callback){
     })
 }
 
+
+exports.getclaimsdeclined = function(id, callback){
+    let sql = `SELECT * From claim where idclaimstatus = '3'`;
+
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+
+exports.getclaimsapproved = function(id, callback){
+    let sql = `SELECT * From claim where idclaimstatus = '2'`;
+
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+exports.getclaimsdraft = function(id, callback){
+    let sql = `SELECT * From claim where idclaimstatus = '1'`;
+
+    db.query(sql, function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
 exports.getclaimstatus = function(id, callback){
     let sql = `SELECT * From claimstatus WHERE idclaimstatus = ?`;
     db.query(sql, [id], function(err, data){

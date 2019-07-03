@@ -27,6 +27,17 @@ exports.getbalance = function(id, callback){
     })
 }
 
+exports.getbalancebyidpolicydetails = function(id, callback){
+    let sql = `SELECT * From balance WHERE idpolicydetails = ?`;
+    db.query(sql, [id], function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
 
 
 exports.insertbalance = function(data, callback){

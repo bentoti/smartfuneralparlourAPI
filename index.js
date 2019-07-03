@@ -151,6 +151,23 @@ app.get("/api/balance/:id", function(req, res){
     }
 });
 
+app.get("/api/getbalancebyidpolicydetails/:id", function(req, res){
+    try {
+        balance.getbalancebyidpolicydetails(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
+
 app.post("/api/balance", function(req, res){
     try {
         balance.insertbalance(req.body, function(err, data){
@@ -1332,6 +1349,9 @@ app.get("/api/policydetails/:id", function(req, res){
         res.status(500).send(error);
     }
 });
+
+
+
 
 app.post("/api/policydetails", function(req, res){
     try {

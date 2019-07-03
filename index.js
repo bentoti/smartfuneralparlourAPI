@@ -9,6 +9,7 @@ const balance = require("./model/balance");
 const bankingdetails = require("./model/bankingdetails");
 const beneficiary = require("./model/beneficiary");
 const formtype = require("./model/formtype");
+const documentupload = require("./model/documentupload");
 const claim = require("./model/claim");
 const claimstatus = require("./model/claimstatus");
 const claimtype = require("./model/claimtype");
@@ -1569,12 +1570,17 @@ app.delete("/api/policytype/:id", function(req, res){
 
 
 
-//formtype
-app.get("/api/formtype/", function(req, res){
+
+
+
+
+
+//documentupload
+app.get("/api/documentupload/", function(req, res){
     try {
         
         var id;
-        formtype.getallformtype(id,function(err, data){
+        documentupload.getalldocumentupload(id,function(err, data){
             if(err){
                 throw err
             }else{
@@ -1587,9 +1593,9 @@ app.get("/api/formtype/", function(req, res){
 });
 
 
-app.get("/api/formtype/:id", function(req, res){
+app.get("/api/documentupload/:id", function(req, res){
     try {
-        formtype.getformtype(req.params.id,function(err, data){
+        documentupload.getdocumentupload(req.params.id,function(err, data){
             if(err){
                 throw err
             }else{
@@ -1601,13 +1607,13 @@ app.get("/api/formtype/:id", function(req, res){
     }
 });
 
-app.post("/api/formtype", function(req, res){
+app.post("/api/documentupload", function(req, res){
     try {
-        formtype.insertformtype(req.body, function(err, data){
+        documentupload.insertdocumentupload(req.body, function(err, data){
             if(err){
                 throw err;
             }else{
-                formtype.getformtype(data.insertId, function(err, data){
+                documentupload.getdocumentupload(data.insertId, function(err, data){
                     if(err){
                         throw err;
                     }else{
@@ -1622,13 +1628,13 @@ app.post("/api/formtype", function(req, res){
     }
 });
 
-app.put("/api/formtype/:id", function(req, res){
+app.put("/api/documentupload/:id", function(req, res){
     try {
-        formtype.updateformtype(req.params.id, req.body, function(err, data){
+        documentupload.updatedocumentupload(req.params.id, req.body, function(err, data){
             if(err){
                 throw err;
             }else{
-                formtype.getformtype(req.params.id, function(err, data){
+                documentupload.getdocumentupload(req.params.id, function(err, data){
                     if(err){
                         throw err;
                     }else{
@@ -1643,9 +1649,9 @@ app.put("/api/formtype/:id", function(req, res){
     }
 })
 
-app.delete("/api/formtype/:id", function(req, res){
+app.delete("/api/documentupload/:id", function(req, res){
     try {
-        formtype.deleteformtype(req.params.id, function(err, data){
+        documentupload.deletedocumentupload(req.params.id, function(err, data){
             if(err){
                 throw err;
             }else{

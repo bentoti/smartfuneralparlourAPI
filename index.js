@@ -8,7 +8,7 @@ const user = require("./model/user");
 const balance = require("./model/balance");
 const bankingdetails = require("./model/bankingdetails");
 const beneficiary = require("./model/beneficiary");
-
+const formtype = require("./model/formtype");
 const claim = require("./model/claim");
 const claimstatus = require("./model/claimstatus");
 const claimtype = require("./model/claimtype");
@@ -33,8 +33,6 @@ app.use(Cors());
 
 
 //user
-
-
 app.get("/api/user/", function(req, res){
     try {
         
@@ -1566,6 +1564,101 @@ app.delete("/api/policytype/:id", function(req, res){
         res.status(500).send(error);
     }
 })
+
+
+
+
+
+//formtype
+app.get("/api/formtype/", function(req, res){
+    try {
+        
+        var id;
+        formtype.getallformtype(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+app.get("/api/formtype/:id", function(req, res){
+    try {
+        formtype.getformtype(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.post("/api/formtype", function(req, res){
+    try {
+        formtype.insertformtype(req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                formtype.getformtype(data.insertId, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+});
+
+app.put("/api/formtype/:id", function(req, res){
+    try {
+        formtype.updateformtype(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                formtype.getformtype(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+app.delete("/api/formtype/:id", function(req, res){
+    try {
+        formtype.deleteformtype(req.params.id, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
+
 
 
 

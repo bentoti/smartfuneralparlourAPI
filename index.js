@@ -1360,7 +1360,7 @@ app.get("/api/policydetails/:id", function(req, res){
 
 app.get("/api/getpolicydetailsbyidmember/:id", function(req, res){
     try {
-        policydetails.getpolicydetails(req.params.id,function(err, data){
+        policydetails.getpolicydetailsbyidmember(req.params.id,function(err, data){
             if(err){
                 throw err
             }else{

@@ -1464,7 +1464,7 @@ app.get("/api/policystatus/", function(req, res){
     }
 });
 
-app.get("/api/policystatus/", function(req, res){
+app.get("/api/policystatus/:id", function(req, res){
     try {
         policystatus.getpolicystatus(req.params.id,function(err, data){
             if(err){

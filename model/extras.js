@@ -16,8 +16,19 @@ db.connect(function(err){
 });
 
 
-exports.getallpolicytype = function(id, callback){
-    let sql = `SELECT * From policytype`;
+exports.getextras = function(id, callback){
+    let sql = `SELECT * From extras WHERE idextras = ?`;
+    db.query(sql, [id], function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+exports.getallextras = function(id, callback){
+    let sql = `SELECT * From extras`;
 
     db.query(sql, function(err, data){
         if(err){
@@ -28,40 +39,9 @@ exports.getallpolicytype = function(id, callback){
     })
 }
 
-exports.getpolicytype = function(id, callback){
-    let sql = `SELECT * From policytype WHERE idpolicytype = ?`;
-    db.query(sql, [id], function(err, data){
-        if(err){
-            callback(err);
-        }else{
-            callback(null, data);
-        }
-    })
-}
-
-exports.getpolicytypebyage = function(id, callback){
-    let sql1 = `SELECT * FROM policytype where ? between minimumage and maximumage`;
-
+exports.insertextras = function(data, callback){
     
-
-
- 
-    db.query(sql1, [id], function(err, data){
-        if(err){
-
-            callback(err);
-        }else{
-
-
-
-            callback(null, data);
-        }
-    })
-}
-
-exports.insertpolicytype = function(data, callback){
-    
-  let sql = "INSERT INTO policytype SET ?";
+  let sql = "INSERT INTO extras SET ?";
 
     db.query(sql,[data], function(err, result){
         if(err){
@@ -74,8 +54,8 @@ exports.insertpolicytype = function(data, callback){
 
 
 
-exports.updatepolicytype = function(id, data, callback){
-    let sql = "update policytype set ? where idpolicytype = ?";
+exports.updateextras = function(id, data, callback){
+    let sql = "update extras set ? where idextras = ?";
     db.query(sql, [data, id], function(err, data){
         if(err){
             callback(err);
@@ -86,8 +66,8 @@ exports.updatepolicytype = function(id, data, callback){
 }
 
 
-exports.deletepolicytype = function(id, callback){
-    let sql = "DELETE from policytype where idpolicytype = ?";
+exports.deleteextras = function(id, callback){
+    let sql = "DELETE from extras where idextras = ?";
     db.query(sql, [id],function(err, data){
         if(err){
             callback(err);

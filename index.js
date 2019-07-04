@@ -13,6 +13,7 @@ const documentupload = require("./model/documentupload");
 const claim = require("./model/claim");
 const claimstatus = require("./model/claimstatus");
 const claimtype = require("./model/claimtype");
+const extras = require("./model/extras");
 const funeralarrangement = require("./model/funeralarrangement");
 const informant = require("./model/informant");
 
@@ -499,7 +500,6 @@ app.get("/api/claimtype/", function(req, res){
     }
 });
 
-
 app.get("/api/claimtype/", function(req, res){
     try {
         
@@ -515,8 +515,6 @@ app.get("/api/claimtype/", function(req, res){
         res.status(500).send(error);
     }
 });
-
-
 
 
 app.post("/api/claimtype", function(req, res){
@@ -574,6 +572,100 @@ app.delete("/api/claimtype/:id", function(req, res){
         res.status(500).send(error);
     }
 })
+
+
+//extras
+
+app.get("/api/extras/", function(req, res){
+    try {
+        
+        var id;
+        extras.getallextras(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.get("/api/extras/", function(req, res){
+    try {
+        
+        var id;
+        extras.getallextras(id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+app.post("/api/extras", function(req, res){
+    try {
+        extras.insertextras(req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                extras.getextras(data.insertId, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+});
+
+app.put("/api/extras/:id", function(req, res){
+    try {
+        extras.updateextras(req.params.id, req.body, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                extras.getextras(req.params.id, function(err, data){
+                    if(err){
+                        throw err;
+                    }else{
+                        res.send(data);
+                    }
+                })
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+        
+    }
+})
+
+app.delete("/api/extras/:id", function(req, res){
+    try {
+        extras.deleteextras(req.params.id, function(err, data){
+            if(err){
+                throw err;
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+
 
 
 //claimstatus

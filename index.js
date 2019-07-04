@@ -1431,6 +1431,7 @@ app.delete("/api/policydetails/:id", function(req, res){
 })
 
 
+
 //policystatus
 
 app.get("/api/user/", function(req, res){
@@ -1452,6 +1453,20 @@ app.get("/api/user/", function(req, res){
 app.get("/api/policystatus/", function(req, res){
     try {
         policystatus.getallpolicystatus(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.get("/api/policystatus/", function(req, res){
+    try {
+        policystatus.getpolicystatus(req.params.id,function(err, data){
             if(err){
                 throw err
             }else{

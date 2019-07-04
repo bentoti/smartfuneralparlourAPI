@@ -25,8 +25,16 @@ const policystatus = require("./model/policystatus");
 const policytype = require("./model/policytype");
 const role = require("./model/role");
 
+//file upload
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+
 const app = express();
 app.listen(3000);
+
+
+
 
 // parse application/json
 app.use(bodyParser.json());
@@ -1350,6 +1358,19 @@ app.get("/api/policydetails/:id", function(req, res){
     }
 });
 
+app.get("/api/getpolicydetailsbyidmember/:id", function(req, res){
+    try {
+        policydetails.getpolicydetails(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 
 
@@ -1918,4 +1939,37 @@ app.delete("/api/action/:id", function(req, res){
     } catch (error) {
         res.status(500).send(error);
     }
+})
+
+//upload file
+
+aws.config.update({
+    secretAccessKey: 'LUxDfXJb5P0Qkh6LPSNGVLToJvvd/OX8ckk3cEnC',
+    accessKeyId:'AKIAJC6XWSK3J2OXOMUQ',
+    region:'eu-west-2'
+});
+
+const s3 = new aws.S3();
+ 
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'smartfuneralparlourdocuments',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: 'TESTING}'});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    },destination: function(req, file, cb) {
+      cb(null, 'uploads/')
+  },
+  filename: function(req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+  }
+  })
+})
+ 
+app.post('/api/upload', upload.single('document'), function (req, res, next) {
+  res.json({"path":req.file.location})
+
 })

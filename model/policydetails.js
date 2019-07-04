@@ -28,6 +28,18 @@ exports.getpolicydetails = function(id, callback){
 }
 
 
+exports.getpolicydetailsbyidmember = function(id, callback){
+    let sql = `SELECT * From policydetails WHERE idmember = ?`;
+    db.query(sql, [id], function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
+
+
 
 exports.insertpolicydetails = function(data, callback){
     

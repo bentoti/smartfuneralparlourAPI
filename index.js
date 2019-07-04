@@ -1566,6 +1566,24 @@ app.get("/api/policytype/:id", function(req, res){
     }
 });
 
+app.get("/api/getpolicytypebyage/:id", function(req, res){
+    try {
+        policytype.getpolicytypebyage(req.params.id,function(err, data){
+            if(err){
+                throw err
+            }else{
+                res.send(data);
+            }
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
+
+
+
 app.post("/api/policytype", function(req, res){
     try {
         policytype.insertpolicytype(req.body, function(err, data){

@@ -39,7 +39,16 @@ exports.getpolicytype = function(id, callback){
     })
 }
 
-
+exports.getpolicytypebyage = function(id, callback){
+    let sql = `SELECT * From policytype WHERE idpolicytype = ?`;
+    db.query(sql, [id], function(err, data){
+        if(err){
+            callback(err);
+        }else{
+            callback(null, data);
+        }
+    })
+}
 
 exports.insertpolicytype = function(data, callback){
     
